@@ -1,0 +1,72 @@
+.dashboard { max-width: 720px; }
+
+.today-status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.today-status--done {
+  background: linear-gradient(135deg, #edfae7, #d4f5e2);
+  border-color: #9dd9b0;
+}
+.today-status--pending {
+  background: linear-gradient(135deg, #fff9f0, #fef3e0);
+  border-color: #f9d89a;
+}
+.today-icon { font-size: 1.4rem; }
+.today-text { font-size: 0.95rem; font-weight: 500; flex: 1; }
+.today-cta { margin-left: auto; flex-shrink: 0; }
+
+.dashboard-section { margin-bottom: 2rem; }
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 1.25rem 1rem;
+}
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.stat-emoji { font-size: 1.2rem; margin: 0.3rem 0; }
+.stat-label { font-size: 0.72rem; font-weight: 500; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+.mood-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+.mood-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mood-1), var(--mood-3), var(--mood-5));
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+.entry-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+.empty-state a { color: var(--accent); font-weight: 500; }

@@ -1,0 +1,121 @@
+.new-entry { max-width: 680px; }
+
+.form-error {
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  color: #c53030;
+  margin-bottom: 1rem;
+}
+
+.prompt-card {
+  margin-bottom: 1.25rem;
+  background: linear-gradient(135deg, #f0f8ff, #e6f0ff);
+  border-color: #bcd4f6;
+}
+.prompt-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #4a7fbd;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.prompt-text {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.form-section { margin-bottom: 1.25rem; }
+.form-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+.required { color: var(--accent); }
+
+.journal-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg);
+  resize: vertical;
+  transition: border-color var(--transition);
+}
+.journal-textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg-card);
+}
+.journal-textarea::placeholder { color: var(--text-muted); }
+
+.textarea-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.65rem;
+}
+.char-count { font-size: 0.75rem; color: var(--text-muted); }
+
+.suggested-tags {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--border);
+}
+.suggested-label {
+  font-size: 0.78rem;
+  color: var(--accent-dark);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.tag-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag-chip {
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text-secondary);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.tag-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+.tag-chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+.tag-chip--suggested {
+  border-style: dashed;
+  border-color: var(--accent);
+  color: var(--accent-dark);
+  background: rgba(124,106,247,0.06);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
