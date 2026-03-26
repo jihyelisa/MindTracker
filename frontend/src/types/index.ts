@@ -5,6 +5,17 @@ export interface User {
   isDemo: boolean;
 }
 
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export type MoodLevel = 1 | 2 | 3 | 4 | 5;
 
 export interface Tag {
@@ -27,12 +38,14 @@ export interface CreateEntryPayload {
   mood: MoodLevel;
   text: string;
   tagIds: number[];
+  tagNames?: string[];
 }
 
 export interface UpdateEntryPayload {
   mood: MoodLevel;
   text: string;
   tagIds: number[];
+  tagNames?: string[];
 }
 
 export interface WeeklySummary {

@@ -1,0 +1,107 @@
+{
+  "common": {
+    "loading": "로딩 중...",
+    "save": "저장",
+    "cancel": "취소",
+    "delete": "삭제",
+    "edit": "수정",
+    "error": "오류",
+    "success": "성공",
+    "demo_mode": "데모 모드",
+    "moods": {
+      "1": "매우 낮음",
+      "2": "낮음",
+      "3": "보통",
+      "4": "좋음",
+      "5": "매우 좋음"
+    }
+  },
+  "auth": {
+    "login_title": "Mind Tracker",
+    "login_subtitle": "당신의 마음 건강을 위한 개인 공간",
+    "login_description": "환영합니다! Mind Tracker는 매일의 기분을 기록하고 AI 기반 인사이트를 통해 당신의 마음 패턴을 이해하도록 돕습니다.",
+    "login_btn": "로그인",
+    "demo_login_btn": "데모 계정으로 시작하기",
+    "no_account": "계정이 없으신가요?",
+    "sign_up": "회원가입",
+    "already_account": "이미 계정이 있으신가요?",
+    "login": "로그인",
+    "create_account": "계정 생성",
+    "full_name": "이름",
+    "email": "이메일",
+    "password": "비밀번호",
+    "confirm_password": "비밀번호 확인",
+    "invalid_credentials": "이메일 또는 비밀번호가 올바르지 않습니다.",
+    "registration_failed": "회원가입에 실패했습니다. 다시 시도해 주세요.",
+    "logout": "로그아웃"
+  },
+  "nav": {
+    "dashboard": "대시보드",
+    "new_entry": "새 기록",
+    "history": "기록",
+    "stats": "통계"
+  },
+  "dashboard": {
+    "welcome": "반가워요, {{name}}님!",
+    "today_status": "오늘의 상태",
+    "logged_today": "오늘의 기분을 이미 기록하셨네요. 잘하셨어요!",
+    "not_logged_today": "아직 오늘의 기분을 기록하지 않으셨어요.",
+    "log_now": "지금 기록하기",
+    "weekly_summary": "주간 요약",
+    "avg_mood": "평균 기분",
+    "streak": "연속 기록",
+    "total_entries": "총 기록 수",
+    "days": "일",
+    "entries": "개"
+  },
+  "insight": {
+    "title": "마음 인사이트",
+    "refresh": "인사이트 새로고침",
+    "ai_badge": "AI",
+    "no_data": "일기를 쓰기 시작하면 맞춤형 인사이트를 받을 수 있어요!",
+    "try_first": "오늘 첫 번째 일기를 작성해 보세요."
+  },
+  "new_entry": {
+    "title": "새 기록",
+    "prompt_label": "오늘의 질문",
+    "mood_question": "지금 기분이 어떠신가요?",
+    "write_about_it": "자세히 적어보세요",
+    "placeholder": "지금 무슨 생각을 하고 계신가요...",
+    "char_count": "{{count}}자",
+    "suggest_tags": "AI 태그 추천",
+    "analyzing": "분석 중...",
+    "ai_suggestions": "AI 추천 태그 — 클릭해서 추가:",
+    "tags_label": "태그",
+    "save_entry": "기록 저장",
+    "saving": "저장 중...",
+    "select_mood_error": "기분을 선택해 주세요.",
+    "write_first_error": "태그 추천을 받으려면 먼저 내용을 작성해 주세요.",
+    "prompts": [
+      "오늘 당신을 웃게 만든 것은 무엇인가요?",
+      "지금 이 순간 감사한 일 한 가지만 꼽는다면?",
+      "오늘 어떤 어려움이 있었고 어떻게 해결했나요?",
+      "지금 당신의 몸 상태는 어떤가요?",
+      "말하지 못한 채 마음속에 담아둔 생각은 무엇인가요?"
+    ]
+  },
+  "history": {
+    "title": "기록",
+    "all_moods": "모든 기분",
+    "no_entries": "이 기분에 해당하는 기록이 없습니다.",
+    "delete_confirm": "이 기록을 삭제하시겠습니까?",
+    "edit_entry": "기록 수정"
+  },
+  "stats": {
+    "title": "통계",
+    "subtitle": "당신의 기분 패턴과 변화 추이",
+    "mood_trend": "시간에 따른 기분 변화",
+    "mood_distribution": "기분 분포",
+    "top_tags": "주요 태그",
+    "ai_analysis": "AI 분석",
+    "no_trend_data": "추이를 보여주기에 데이터가 부족합니다. 계속 기록해 보세요!",
+    "no_data": "통계를 보여주기에 데이터가 부족합니다. 계속 기록해 보세요!",
+    "mood_label": "기분",
+    "entries_label": "기록 수",
+    "date_label": "날짜"
+  }
+}

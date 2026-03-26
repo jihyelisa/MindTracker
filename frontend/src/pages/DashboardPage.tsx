@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { fetchEntries, fetchWeeklySummary } from '../services/api';
 import type { Entry, WeeklySummary } from '../types';
@@ -20,6 +21,7 @@ function MoodBar({ avg }: { avg: number }) {
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [summary, setSummary] = useState<WeeklySummary | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,8 +47,8 @@ export default function DashboardPage() {
   return (
     <div className="dashboard fade-in">
       <header className="page-header">
-        <h1 className="page-title">Good {getGreeting()}, {user.name.split(' ')[0]} 👋</h1>
-        <p className="page-subtitle">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
+        <h1 className="page-title">{t('dashboard.welcome', { name: user.name.split(' ')[0] })} 👋</h1>
+        <p className="page-subtitle">{new Date().toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
       </header>
 
       {/* Today's status */}
@@ -54,20 +56,20 @@ export default function DashboardPage() {
         {hasLoggedToday ? (
           <>
             <span className="today-icon">✅</span>
-            <span className="today-text">You've logged today's mood!</span>
+            <span className="today-text">{t('dashboard.logged_today')}</span>
           </>
         ) : (
           <>
             <span className="today-icon">📝</span>
-            <span className="today-text">How are you feeling today?</span>
-            <Link to="/new" className="btn btn-primary today-cta">Log Mood</Link>
+            <span className="today-text">{t('dashboard.not_logged_today')}</span>
+            <Link to="/new" className="btn btn-primary today-cta">{t('dashboard.log_now')}</Link>
           </>
         )}
       </div>
 
       {/* Weekly summary */}
       <section className="dashboard-section">
-        <h2 className="section-title">This Week</h2>
+        <h2 className="section-title">{t('dashboard.weekly_summary')}</h2>
         {loading ? (
           <div className="grid-3">
             {[1,2,3].map(i => <div key={i} className="card skeleton" style={{ height: '80px' }} />)}
@@ -77,18 +79,18 @@ export default function DashboardPage() {
             <div className="stat-card card">
               <div className="stat-value">{summary.averageMood.toFixed(1)}</div>
               <div className="stat-emoji">{MOOD_EMOJIS[Math.round(summary.averageMood) as MoodLevel]}</div>
-              <div className="stat-label">Avg Mood</div>
+              <div className="stat-label">{t('dashboard.avg_mood')}</div>
               <MoodBar avg={summary.averageMood} />
             </div>
             <div className="stat-card card">
               <div className="stat-value">{summary.streak}</div>
               <div className="stat-emoji">🔥</div>
-              <div className="stat-label">Day Streak</div>
+              <div className="stat-label">{t('dashboard.streak')}</div>
             </div>
             <div className="stat-card card">
               <div className="stat-value">{summary.totalEntries}</div>
               <div className="stat-emoji">📖</div>
-              <div className="stat-label">Entries This Week</div>
+              <div className="stat-label">{t('dashboard.total_entries')}</div>
             </div>
           </div>
         ) : null}
@@ -96,15 +98,15 @@ export default function DashboardPage() {
 
       {/* AI Insight */}
       <section className="dashboard-section">
-        <h2 className="section-title">Mind Insight</h2>
+        <h2 className="section-title">{t('insight.title')}</h2>
         <InsightCard userId={user.id} />
       </section>
 
       {/* Recent entries */}
       <section className="dashboard-section">
         <div className="section-header">
-          <h2 className="section-title">Recent Entries</h2>
-          <Link to="/history" className="btn btn-ghost">View All</Link>
+          <h2 className="section-title">{t('history.title')}</h2>
+          <Link to="/history" className="btn btn-ghost">{t('history.all_moods')}</Link>
         </div>
         {loading ? (
           <div className="entry-list">
@@ -118,17 +120,10 @@ export default function DashboardPage() {
           </div>
         ) : (
           <div className="empty-state card">
-            <p>No entries yet. <Link to="/new">Log your first mood!</Link></p>
+            <p>{t('history.no_entries')} <Link to="/new">{t('dashboard.log_now')}</Link></p>
           </div>
         )}
       </section>
     </div>
   );
-}
-
-function getGreeting() {
-  const h = new Date().getHours();
-  if (h < 12) return 'morning';
-  if (h < 17) return 'afternoon';
-  return 'evening';
 }

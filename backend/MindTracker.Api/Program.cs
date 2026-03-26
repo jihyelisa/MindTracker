@@ -10,15 +10,19 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IGeminiService, GeminiService>();
 
 // Database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseNpgsql(connectionString));
 
-// CORS – allow local Vite dev server
+// Temporary In-Memory Database for test deployment
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseInMemoryDatabase("MindTrackerDb"));
+
+// CORS – allow local Vite dev server and production frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("DevPolicy", policy =>
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
+        policy.WithOrigins("http://localhost:5173", "http://localhost:3000", "http://mindtracker-env.eba-n8f2ufjt.us-east-1.elasticbeanstalk.com/")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials());
@@ -34,8 +38,11 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    // db.Database.Migrate(); // Not needed for In-Memory
     DbSeeder.Seed(db);
 }
 
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+
+app.MapGet("/", () => "MindTracker API is running 🚀");
+app.Run($"http://0.0.0.0:{port}");

@@ -1,0 +1,1 @@
+web: dotnet MindTracker.Api.dll

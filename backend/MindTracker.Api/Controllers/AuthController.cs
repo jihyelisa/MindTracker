@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MindTracker.Api.Data;
 using MindTracker.Api.DTOs;
+using MindTracker.Api.Models;
 
 namespace MindTracker.Api.Controllers;
 
@@ -24,6 +25,38 @@ public class AuthController : ControllerBase
         var user = await _db.Users.FirstOrDefaultAsync(u => u.IsDemo);
         if (user == null)
             return NotFound(new { message = "Demo user not found. Please seed the database." });
+
+        return Ok(new UserDto(user.Id, user.Name, user.Email, user.IsDemo));
+    }
+
+    // POST /api/auth/login
+    [HttpPost("login")]
+    public async Task<ActionResult<UserDto>> Login([FromBody] LoginRequest req)
+    {
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == req.Email && u.Password == req.Password);
+        if (user == null)
+            return Unauthorized(new { message = "Invalid email or password" });
+
+        return Ok(new UserDto(user.Id, user.Name, user.Email, user.IsDemo));
+    }
+
+    // POST /api/auth/register
+    [HttpPost("register")]
+    public async Task<ActionResult<UserDto>> Register([FromBody] RegisterRequest req)
+    {
+        if (await _db.Users.AnyAsync(u => u.Email == req.Email))
+            return BadRequest(new { message = "Email is already in use" });
+
+        var user = new User
+        {
+            Name = req.Name,
+            Email = req.Email,
+            Password = req.Password,
+            IsDemo = false
+        };
+
+        _db.Users.Add(user);
+        await _db.SaveChangesAsync();
 
         return Ok(new UserDto(user.Id, user.Name, user.Email, user.IsDemo));
     }

@@ -19,6 +19,46 @@
   flex: 1;
 }
 
+.insight-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.insight-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent-dark);
+  background: rgba(124,106,247,0.08);
+  border: 1px solid rgba(124,106,247,0.2);
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition);
+}
+
+.insight-refresh-btn:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.insight-refresh-icon {
+  font-size: 0.9rem;
+  transition: transform 0.4s ease;
+}
+
+.insight-refresh-btn:hover .insight-refresh-icon {
+  transform: rotate(180deg);
+}
+
+.insight-refresh-label {
+  opacity: 0.85;
+}
+
 .insight-badge {
   font-size: 0.65rem;
   font-weight: 700;

@@ -79,10 +79,32 @@ public class EntriesController : ControllerBase
         _db.Entries.Add(entry);
         await _db.SaveChangesAsync();
 
-        // Apply tags
+        // Apply tags by ID
         foreach (var tagId in req.TagIds.Distinct())
         {
-            _db.EntryTags.Add(new EntryTag { EntryId = entry.Id, TagId = tagId });
+            if (!_db.EntryTags.Any(et => et.EntryId == entry.Id && et.TagId == tagId))
+                _db.EntryTags.Add(new EntryTag { EntryId = entry.Id, TagId = tagId });
+        }
+
+        // Apply tags by Name (for AI suggestions)
+        if (req.TagNames != null && req.TagNames.Any())
+        {
+            foreach (var tagName in req.TagNames.Distinct())
+            {
+                var normalized = tagName.Trim().ToLower();
+                if (string.IsNullOrWhiteSpace(normalized)) continue;
+
+                var tag = await _db.Tags.FirstOrDefaultAsync(t => t.Name == normalized);
+                if (tag == null)
+                {
+                    tag = new Tag { Name = normalized };
+                    _db.Tags.Add(tag);
+                    await _db.SaveChangesAsync();
+                }
+
+                if (!_db.EntryTags.Any(et => et.EntryId == entry.Id && et.TagId == tag.Id))
+                    _db.EntryTags.Add(new EntryTag { EntryId = entry.Id, TagId = tag.Id });
+            }
         }
         await _db.SaveChangesAsync();
 
@@ -109,9 +131,32 @@ public class EntriesController : ControllerBase
 
         // Replace tags
         _db.EntryTags.RemoveRange(entry.EntryTags);
+        
+        // IDs
         foreach (var tagId in req.TagIds.Distinct())
         {
             _db.EntryTags.Add(new EntryTag { EntryId = entry.Id, TagId = tagId });
+        }
+
+        // Names
+        if (req.TagNames != null && req.TagNames.Any())
+        {
+            foreach (var tagName in req.TagNames.Distinct())
+            {
+                var normalized = tagName.Trim().ToLower();
+                if (string.IsNullOrWhiteSpace(normalized)) continue;
+
+                var tag = await _db.Tags.FirstOrDefaultAsync(t => t.Name == normalized);
+                if (tag == null)
+                {
+                    tag = new Tag { Name = normalized };
+                    _db.Tags.Add(tag);
+                    await _db.SaveChangesAsync();
+                }
+
+                if (!_db.EntryTags.Any(et => et.EntryId == entry.Id && et.TagId == tag.Id))
+                    _db.EntryTags.Add(new EntryTag { EntryId = entry.Id, TagId = tag.Id });
+            }
         }
         await _db.SaveChangesAsync();
 

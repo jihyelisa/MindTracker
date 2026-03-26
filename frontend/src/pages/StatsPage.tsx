@@ -5,6 +5,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 } from 'recharts';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import { fetchStats } from '../services/api';
 import type { StatsData, MoodLevel } from '../types';
 import { MOOD_EMOJIS } from '../components/MoodSelector';
@@ -17,6 +18,7 @@ const MOOD_COLORS: Record<number, string> = {
 
 export default function StatsPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [stats, setStats] = useState<StatsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [days, setDays] = useState(30);
@@ -30,8 +32,8 @@ export default function StatsPage() {
   return (
     <div className="stats fade-in">
       <header className="page-header">
-        <h1 className="page-title">Stats</h1>
-        <p className="page-subtitle">Your mood patterns and trends</p>
+        <h1 className="page-title">{t('stats.title')}</h1>
+        <p className="page-subtitle">{t('stats.subtitle')}</p>
       </header>
 
       {/* Period filter */}
@@ -55,7 +57,7 @@ export default function StatsPage() {
         <>
           {/* Mood Trend Chart */}
           <section className="stats-section card">
-            <h2 className="stats-chart-title">Mood Over Time</h2>
+            <h2 className="stats-chart-title">{t('stats.mood_trend')}</h2>
             {stats.moodTrend.length > 1 ? (
               <ResponsiveContainer width="100%" height={180}>
                 <LineChart data={stats.moodTrend} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
@@ -68,9 +70,9 @@ export default function StatsPage() {
                   <YAxis domain={[1, 5]} ticks={[1,2,3,4,5]} tick={{ fontSize: 11 }} />
                   <Tooltip
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    formatter={(val: any) => [`${val} — ${MOOD_EMOJIS[Number(val) as MoodLevel]}`, 'Mood']}
+                    formatter={(val: any) => [`${val} — ${MOOD_EMOJIS[Number(val) as MoodLevel]}`, t('stats.mood_label')]}
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    labelFormatter={(l: any) => `Date: ${l}`}
+                    labelFormatter={(l: any) => `${t('stats.date_label')}: ${l}`}
                   />
                   <Line
                     type="monotone"
@@ -83,14 +85,14 @@ export default function StatsPage() {
                 </LineChart>
               </ResponsiveContainer>
             ) : (
-              <p className="stats-empty">Not enough data for a trend yet. Keep logging!</p>
+              <p className="stats-empty">{t('stats.no_trend_data')}</p>
             )}
           </section>
 
           {/* Mood Distribution */}
           <div className="grid-2">
             <section className="stats-section card">
-              <h2 className="stats-chart-title">Mood Distribution</h2>
+              <h2 className="stats-chart-title">{t('stats.mood_distribution')}</h2>
               {stats.moodDistribution.length > 0 ? (
                 <ResponsiveContainer width="100%" height={160}>
                   <BarChart data={stats.moodDistribution} margin={{ top: 5, right: 5, bottom: 5, left: -20 }}>
@@ -102,7 +104,7 @@ export default function StatsPage() {
                     <YAxis tick={{ fontSize: 11 }} allowDecimals={false} />
                     <Tooltip
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      formatter={(val: any) => [Number(val), 'Entries']}
+                      formatter={(val: any) => [Number(val), t('stats.entries_label')]}
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       labelFormatter={(m: any) => MOOD_EMOJIS[m as MoodLevel]}
                     />
@@ -114,13 +116,13 @@ export default function StatsPage() {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <p className="stats-empty">No entries yet.</p>
+                <p className="stats-empty">{t('common.no_data')}</p>
               )}
             </section>
 
             {/* Tag Analysis */}
             <section className="stats-section card">
-              <h2 className="stats-chart-title">Top Tags</h2>
+              <h2 className="stats-chart-title">{t('stats.top_tags')}</h2>
               {stats.tagAnalysis.length > 0 ? (
                 <div className="tag-analysis">
                   {stats.tagAnalysis.slice(0, 8).map(({ tag, count }) => {
@@ -140,7 +142,7 @@ export default function StatsPage() {
                   })}
                 </div>
               ) : (
-                <p className="stats-empty">No tags yet.</p>
+                <p className="stats-empty">{t('common.no_data')}</p>
               )}
             </section>
           </div>
@@ -148,7 +150,7 @@ export default function StatsPage() {
           {/* AI Insight */}
           {user && (
             <section className="stats-section">
-              <h2 className="section-title" style={{ marginBottom: '0.85rem' }}>AI Analysis</h2>
+              <h2 className="section-title" style={{ marginBottom: '0.85rem' }}>{t('stats.ai_analysis')}</h2>
               <InsightCard userId={user.id} />
             </section>
           )}

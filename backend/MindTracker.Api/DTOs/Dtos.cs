@@ -12,10 +12,12 @@ public record EntryDto(
     List<TagDto> Tags
 );
 
-public record CreateEntryRequest(DateTime Date, int Mood, string Text, List<int> TagIds);
-public record UpdateEntryRequest(int Mood, string Text, List<int> TagIds);
+public record CreateEntryRequest(DateTime Date, int Mood, string Text, List<int> TagIds, List<string>? TagNames = null);
+public record UpdateEntryRequest(int Mood, string Text, List<int> TagIds, List<string>? TagNames = null);
 
 public record UserDto(int Id, string Name, string Email, bool IsDemo);
+public record LoginRequest(string Email, string Password);
+public record RegisterRequest(string Name, string Email, string Password);
 
 public record WeeklySummaryDto(double AverageMood, int Streak, int TotalEntries);
 

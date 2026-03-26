@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Entry, CreateEntryPayload, UpdateEntryPayload, WeeklySummary, StatsData, Tag, AiInsight, AiTagSuggestions, User } from '../types';
+import type { Entry, CreateEntryPayload, UpdateEntryPayload, WeeklySummary, StatsData, Tag, AiInsight, AiTagSuggestions, User, LoginRequest, RegisterRequest } from '../types';
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5254';
 
@@ -8,6 +8,12 @@ const api = axios.create({ baseURL: BASE_URL, withCredentials: true });
 // ── Auth ──────────────────────────────────────────────────────────
 export const fetchDemoUser = (): Promise<User> =>
   api.get<User>('/api/auth/demo').then(r => r.data);
+
+export const login = (payload: LoginRequest): Promise<User> =>
+  api.post<User>('/api/auth/login', payload).then(r => r.data);
+
+export const register = (payload: RegisterRequest): Promise<User> =>
+  api.post<User>('/api/auth/register', payload).then(r => r.data);
 
 // ── Entries ──────────────────────────────────────────────────────
 export const fetchEntries = (userId: number, moodFilter?: number, limit = 50): Promise<Entry[]> =>
@@ -38,8 +44,8 @@ export const fetchTags = (): Promise<Tag[]> =>
   api.get<Tag[]>('/api/tags').then(r => r.data);
 
 // ── AI ───────────────────────────────────────────────────────────
-export const fetchTagSuggestions = (text: string): Promise<AiTagSuggestions> =>
-  api.post<AiTagSuggestions>('/api/ai/tag-suggestions', { text }).then(r => r.data);
+export const fetchTagSuggestions = (text: string, language = 'en'): Promise<AiTagSuggestions> =>
+  api.post<AiTagSuggestions>('/api/ai/tag-suggestions', { text, language }).then(r => r.data);
 
-export const fetchAiInsight = (userId: number): Promise<AiInsight> =>
-  api.post<AiInsight>('/api/ai/insight', { userId }).then(r => r.data);
+export const fetchAiInsight = (userId: number, language = 'en'): Promise<AiInsight> =>
+  api.post<AiInsight>('/api/ai/insight', { userId, language }).then(r => r.data);

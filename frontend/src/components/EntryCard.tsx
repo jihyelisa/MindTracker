@@ -1,5 +1,6 @@
+import { useTranslation } from 'react-i18next';
 import type { Entry } from '../types';
-import { MOOD_EMOJIS, MOOD_LABELS } from './MoodSelector';
+import { MOOD_EMOJIS } from './MoodSelector';
 import type { MoodLevel } from '../types';
 import './EntryCard.css';
 
@@ -11,14 +12,16 @@ interface Props {
   compact?: boolean;
 }
 
-function formatDate(dateStr: string) {
-  return new Date(dateStr).toLocaleDateString('en-US', {
-    weekday: 'short', month: 'short', day: 'numeric'
-  });
-}
-
 export default function EntryCard({ entry, onClick, onDelete, onEdit, compact }: Props) {
+  const { t, i18n } = useTranslation();
   const mood = entry.mood as MoodLevel;
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US', {
+      weekday: 'short', month: 'short', day: 'numeric'
+    });
+  };
+
   return (
     <article
       className={`entry-card entry-card--mood-${mood}${onClick ? ' entry-card--clickable' : ''}`}
@@ -29,7 +32,7 @@ export default function EntryCard({ entry, onClick, onDelete, onEdit, compact }:
       <div className="entry-card-header">
         <div className="entry-card-mood">
           <span className="entry-card-emoji">{MOOD_EMOJIS[mood]}</span>
-          <span className="entry-card-mood-label">{MOOD_LABELS[mood]}</span>
+          <span className="entry-card-mood-label">{t(`common.moods.${mood}`)}</span>
         </div>
         <time className="entry-card-date">{formatDate(entry.date)}</time>
       </div>
@@ -51,10 +54,10 @@ export default function EntryCard({ entry, onClick, onDelete, onEdit, compact }:
       {(onEdit || onDelete) && (
         <div className="entry-card-actions" onClick={e => e.stopPropagation()}>
           {onEdit && (
-            <button className="btn btn-ghost btn-sm" onClick={onEdit}>Edit</button>
+            <button className="btn btn-ghost btn-sm" onClick={onEdit}>{t('common.edit')}</button>
           )}
           {onDelete && (
-            <button className="btn btn-ghost btn-sm btn-danger" onClick={onDelete}>Delete</button>
+            <button className="btn btn-ghost btn-sm btn-danger" onClick={onDelete}>{t('common.delete')}</button>
           )}
         </div>
       )}

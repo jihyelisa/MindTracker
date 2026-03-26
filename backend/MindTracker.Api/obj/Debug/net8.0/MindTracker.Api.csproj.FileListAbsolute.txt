@@ -103,3 +103,6 @@
 /Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/obj/Debug/net8.0/MindTracker.Api.pdb
 /Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/obj/Debug/net8.0/MindTracker.Api.genruntimeconfig.cache
 /Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/obj/Debug/net8.0/ref/MindTracker.Api.dll
+/Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/obj/Debug/net8.0/MindTracker.Api.sourcelink.json
+/Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/bin/Debug/net8.0/publish/web.config
+/Users/jihye/Desktop/MindTracker/backend/MindTracker.Api/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.InMemory.dll

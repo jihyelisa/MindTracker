@@ -13,6 +13,7 @@ public static class DbSeeder
         {
             Name = "Demo User",
             Email = "demo@mindtracker.app",
+            Password = "password123",
             IsDemo = true,
             CreatedAt = DateTime.UtcNow.AddDays(-21)
         };

@@ -26,7 +26,8 @@ public class AiController : ControllerBase
         if (string.IsNullOrWhiteSpace(req.Text))
             return BadRequest(new { message = "Text is required" });
 
-        var tags = await _gemini.SuggestTagsAsync(req.Text);
+        var existingTags = await _db.Tags.Select(t => t.Name).ToListAsync();
+        var tags = await _gemini.SuggestTagsAsync(req.Text, existingTags, req.Language);
         return Ok(new AiTagsDto(tags));
     }
 
@@ -44,14 +45,14 @@ public class AiController : ControllerBase
 
         if (!recentEntries.Any())
             return Ok(new AiInsightDto(
-                "Start journaling to get personalized insights!",
-                "Try logging your first entry today."
+                req.Language == "ko" ? "일기를 써서 개인화된 통찰을 얻어보세요!" : "Start journaling to get personalized insights!",
+                req.Language == "ko" ? "오늘 첫 번째 기록을 남겨보세요." : "Try logging your first entry today."
             ));
 
-        var (summary, suggestion) = await _gemini.GenerateInsightAsync(recentEntries);
+        var (summary, suggestion) = await _gemini.GenerateInsightAsync(recentEntries, req.Language);
         return Ok(new AiInsightDto(summary, suggestion));
     }
 }
 
-public record TagSuggestionRequest(string Text);
-public record InsightRequest(int UserId);
+public record TagSuggestionRequest(string Text, string Language = "en");
+public record InsightRequest(int UserId, string Language = "en");

@@ -1,16 +1,18 @@
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const NAV_ITEMS = [
-  { to: '/', label: 'Dashboard', icon: '🏠' },
-  { to: '/new', label: 'New Entry', icon: '✏️' },
-  { to: '/history', label: 'History', icon: '📖' },
-  { to: '/stats', label: 'Stats', icon: '📊' },
+  { to: '/', label: 'nav.dashboard', icon: '🏠' },
+  { to: '/new', label: 'nav.new_entry', icon: '✏️' },
+  { to: '/history', label: 'nav.history', icon: '📖' },
+  { to: '/stats', label: 'nav.stats', icon: '📊' },
 ];
 
 export default function Navbar() {
-  const { user, isDemo } = useAuth();
+  const { user, isDemo, logout } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <>
@@ -24,7 +26,7 @@ export default function Navbar() {
         {isDemo && (
           <div className="demo-badge">
             <span className="demo-dot" />
-            Demo Mode
+            {t('common.demo_mode')}
           </div>
         )}
 
@@ -39,7 +41,7 @@ export default function Navbar() {
                 }
               >
                 <span className="navbar-link-icon">{item.icon}</span>
-                <span>{item.label}</span>
+                <span>{t(item.label)}</span>
               </NavLink>
             </li>
           ))}
@@ -48,10 +50,13 @@ export default function Navbar() {
         {user && (
           <div className="navbar-user">
             <div className="navbar-avatar">{user.name[0]}</div>
-            <div>
+            <div className="navbar-user-info">
               <div className="navbar-user-name">{user.name}</div>
               <div className="navbar-user-email">{user.email}</div>
             </div>
+            <button className="navbar-logout-btn" onClick={logout} title={t('auth.logout')}>
+              🚪
+            </button>
           </div>
         )}
       </nav>
@@ -68,9 +73,13 @@ export default function Navbar() {
             }
           >
             <span>{item.icon}</span>
-            <span className="navbar-mobile-label">{item.label}</span>
+            <span className="navbar-mobile-label">{t(item.label)}</span>
           </NavLink>
         ))}
+        <button className="navbar-mobile-link navbar-mobile-logout" onClick={logout}>
+          <span>🚪</span>
+          <span className="navbar-mobile-label">{t('auth.logout')}</span>
+        </button>
       </nav>
     </>
   );

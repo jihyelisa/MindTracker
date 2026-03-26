@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { fetchEntries, fetchTags, updateEntry, deleteEntry } from '../services/api';
 import type { Entry, Tag, MoodLevel } from '../types';
@@ -9,6 +10,7 @@ import './HistoryPage.css';
 
 export default function HistoryPage() {
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,7 +53,7 @@ export default function HistoryPage() {
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Delete this entry?')) return;
+    if (!confirm(t('history.delete_confirm'))) return;
     await deleteEntry(id);
     loadEntries();
   };
@@ -63,18 +65,18 @@ export default function HistoryPage() {
   return (
     <div className="history fade-in">
       <header className="page-header">
-        <h1 className="page-title">History</h1>
-        <p className="page-subtitle">All your mood entries</p>
+        <h1 className="page-title">{t('history.title')}</h1>
+        <p className="page-subtitle">{t('history.all_moods')}</p>
       </header>
 
       {/* Mood filter */}
       <div className="history-filters card">
-        <span className="filter-label">Filter by mood:</span>
+        <span className="filter-label">{t('history.all_moods')}:</span>
         <div className="filter-chips">
           <button
             className={`filter-chip${!moodFilter ? ' filter-chip--active' : ''}`}
             onClick={() => setMoodFilter(undefined)}
-          >All</button>
+          >{t('history.all_moods')}</button>
           {([1,2,3,4,5] as MoodLevel[]).map(m => (
             <button
               key={m}
@@ -93,15 +95,15 @@ export default function HistoryPage() {
           {[1,2,3].map(i => <div key={i} className="card skeleton" style={{ height: '100px' }} />)}
         </div>
       ) : entries.length === 0 ? (
-        <div className="empty-state card">No entries found.</div>
+        <div className="empty-state card">{t('history.no_entries')}</div>
       ) : (
         <div className="entry-list">
           {entries.map(entry => (
             <div key={entry.id}>
               {editingId === entry.id ? (
                 <div className="card edit-form">
-                  <h3 className="edit-title">Edit Entry</h3>
-                  <div className="edit-date">{new Date(entry.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</div>
+                  <h3 className="edit-title">{t('history.edit_entry')}</h3>
+                  <div className="edit-date">{new Date(entry.date).toLocaleDateString(i18n.language === 'ko' ? 'ko-KR' : 'en-US', { month: 'long', day: 'numeric' })}</div>
                   <MoodSelector value={editMood} onChange={setEditMood} />
                   <textarea
                     className="edit-textarea"
@@ -122,8 +124,8 @@ export default function HistoryPage() {
                     ))}
                   </div>
                   <div className="edit-actions">
-                    <button className="btn btn-ghost" onClick={cancelEdit}>Cancel</button>
-                    <button className="btn btn-primary" onClick={saveEdit}>Save</button>
+                    <button className="btn btn-ghost" onClick={cancelEdit}>{t('common.cancel')}</button>
+                    <button className="btn btn-primary" onClick={saveEdit}>{t('common.save')}</button>
                   </div>
                 </div>
               ) : (
