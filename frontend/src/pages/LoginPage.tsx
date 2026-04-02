@@ -10,18 +10,27 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [shake, setShake] = useState(false);
+
+  const triggerShake = () => {
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       setError(t('auth.invalid_credentials'));
+      triggerShake();
       return;
     }
     try {
       setError('');
       await login({ email, password });
-    } catch {
-      setError(t('auth.invalid_credentials'));
+    } catch (err: any) {
+      const msg = err.response?.data?.message || t('auth.invalid_credentials');
+      setError(msg);
+      triggerShake();
     }
   };
 
@@ -29,14 +38,15 @@ export default function LoginPage() {
     try {
       setError('');
       await loginDemo();
-    } catch {
-      setError(t('common.error'));
+    } catch (err: any) {
+      setError(err.response?.data?.message || t('common.error'));
+      triggerShake();
     }
   };
 
   return (
     <div className="login-page fade-in">
-      <div className="login-card card">
+      <div className={`login-card card ${shake ? 'shake' : ''}`}>
         <div className="login-header">
           <span className="login-logo">🧠</span>
           <h1 className="login-title">{t('auth.login_title')}</h1>

@@ -22,10 +22,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("DevPolicy", policy =>
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000", "http://mindtracker-env.eba-n8f2ufjt.us-east-1.elasticbeanstalk.com/")
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowCredentials());
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "http://mindtracker-env-3.eba-n8f2ufjt.us-east-1.elasticbeanstalk.com",
+                "http://mindtracker-frontend-183184873270-us-east-1-an.s3-website-us-east-1.amazonaws.com"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+    });
 });
 
 var app = builder.Build();
@@ -42,7 +50,7 @@ using (var scope = app.Services.CreateScope())
     DbSeeder.Seed(db);
 }
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5254";
 
 app.MapGet("/", () => "MindTracker API is running 🚀");
 app.Run($"http://0.0.0.0:{port}");
