@@ -19,6 +19,7 @@ export default function NewEntryPage() {
   const [selectedTagNames, setSelectedTagNames] = useState<Set<string>>(new Set());
   const [suggestedTagNames, setSuggestedTagNames] = useState<string[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [manualTag, setManualTag] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -53,6 +54,8 @@ export default function NewEntryPage() {
 
   const acceptSuggested = (name: string) => {
     const normalized = name.trim().toLowerCase();
+    if (!normalized) return;
+
     const existing = tags.find(t => t.name.toLowerCase() === normalized);
     
     if (existing) {
@@ -61,6 +64,20 @@ export default function NewEntryPage() {
       setSelectedTagNames(prev => new Set([...prev, normalized]));
     }
     setSuggestedTagNames(prev => prev.filter(t => t !== name));
+  };
+
+  const handleAddManualTag = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const name = manualTag.trim().toLowerCase();
+    if (!name) return;
+
+    const existing = tags.find(t => t.name.toLowerCase() === name);
+    if (existing) {
+      setSelectedTagIds(prev => new Set([...prev, existing.id]));
+    } else {
+      setSelectedTagNames(prev => new Set([...prev, name]));
+    }
+    setManualTag('');
   };
 
   const handleSave = async () => {
@@ -150,6 +167,24 @@ export default function NewEntryPage() {
       {/* Tags */}
       <section className="form-section card">
         <h2 className="form-section-title">{t('new_entry.tags_label')}</h2>
+        
+        <form className="manual-tag-form" onSubmit={handleAddManualTag}>
+          <input
+            type="text"
+            className="manual-tag-input"
+            placeholder={t('new_entry.add_tag_placeholder')}
+            value={manualTag}
+            onChange={e => setManualTag(e.target.value)}
+          />
+          <button 
+            type="submit" 
+            className="btn btn-outline btn-sm"
+            disabled={!manualTag.trim()}
+          >
+            {t('new_entry.add_tag_btn')}
+          </button>
+        </form>
+
         <div className="tag-chips">
           {tags.map(tag => (
             <button

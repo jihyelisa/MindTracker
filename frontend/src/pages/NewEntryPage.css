@@ -31,6 +31,27 @@
   line-height: 1.5;
 }
 
+.manual-tag-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.manual-tag-input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  transition: border-color var(--transition);
+}
+
+.manual-tag-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
 .form-section { margin-bottom: 1.25rem; }
 .form-section-title {
   font-size: 0.95rem;

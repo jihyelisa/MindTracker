@@ -72,6 +72,8 @@
     "analyzing": "Analyzing...",
     "ai_suggestions": "AI Suggestions — click to add:",
     "tags_label": "Tags",
+    "add_tag_placeholder": "Add tag...",
+    "add_tag_btn": "Add",
     "save_entry": "Save Entry",
     "saving": "Saving...",
     "select_mood_error": "Please select a mood.",

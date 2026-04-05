@@ -97,7 +97,7 @@ public class GeminiService : IGeminiService
     {
         try
         {
-            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-preview:generateContent?key={_apiKey}";
+            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={_apiKey}";
             var body = new
             {
                 contents = new[] { new { parts = new[] { new { text = prompt } } } }

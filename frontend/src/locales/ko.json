@@ -72,6 +72,8 @@
     "analyzing": "분석 중...",
     "ai_suggestions": "AI 추천 태그 — 클릭해서 추가:",
     "tags_label": "태그",
+    "add_tag_placeholder": "태그 추가...",
+    "add_tag_btn": "추가",
     "save_entry": "기록 저장",
     "saving": "저장 중...",
     "select_mood_error": "기분을 선택해 주세요.",
