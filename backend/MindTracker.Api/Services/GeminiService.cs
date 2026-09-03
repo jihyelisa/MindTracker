@@ -13,7 +13,7 @@ public class GeminiService : IGeminiService
     public GeminiService(IHttpClientFactory httpClientFactory, IConfiguration config, ILogger<GeminiService> logger)
     {
         _http = httpClientFactory.CreateClient();
-        _apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") ?? config["GeminiApiKey"];
+        _apiKey = Environment.GetEnvironmentVariable("GEMINI_API_KEY") ?? config["GEMINI_API_KEY"];
         _logger = logger;
     }
 
@@ -97,7 +97,7 @@ public class GeminiService : IGeminiService
     {
         try
         {
-            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key={_apiKey}";
+            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key={_apiKey}";
             var body = new
             {
                 contents = new[] { new { parts = new[] { new { text = prompt } } } }

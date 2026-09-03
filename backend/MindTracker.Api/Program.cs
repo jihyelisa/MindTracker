@@ -10,13 +10,13 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<IGeminiService, GeminiService>();
 
 // Database
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// builder.Services.AddDbContext<AppDbContext>(options =>
-//     options.UseNpgsql(connectionString));
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // Temporary In-Memory Database for test deployment
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("MindTrackerDb"));
+// builder.Services.AddDbContext<AppDbContext>(options =>
+//     options.UseInMemoryDatabase("MindTrackerDb"));
 
 // CORS – allow local Vite dev server and production frontend
 builder.Services.AddCors(options =>
@@ -25,10 +25,9 @@ builder.Services.AddCors(options =>
     {
         policy
             .WithOrigins(
-                "http://localhost:5173",
-                "http://localhost:3000",
-                "http://mindtracker-env-3.eba-n8f2ufjt.us-east-1.elasticbeanstalk.com",
-                "http://mindtracker-frontend-183184873270-us-east-1-an.s3-website-us-east-1.amazonaws.com"
+                "https://mindtrackerapi.shop",       // 프론트엔드 커스텀 도메인
+                "https://www.mindtrackerapi.shop",   // www 붙은 도메인
+                "http://localhost:5173"              // 로컬 개발 환경
             )
             .AllowAnyMethod()
             .AllowAnyHeader()
@@ -46,7 +45,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // db.Database.Migrate(); // Not needed for In-Memory
+    db.Database.Migrate(); // Apply migrations on startup
     DbSeeder.Seed(db);
 }
 

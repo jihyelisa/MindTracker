@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MindTracker.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5c555a12f580b6a633fd762f958f26f91a8f619")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab6dcd67871d33063e53dd7b31f8013e3c57ef37")]
 [assembly: System.Reflection.AssemblyProductAttribute("MindTracker.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MindTracker.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
